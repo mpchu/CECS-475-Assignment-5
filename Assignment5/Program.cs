@@ -390,9 +390,13 @@ namespace Assignment5
                                 course = businessLayer.GetCourseByID(id);
 
                                 //Get rid of all connections in course
-                                Teacher tempTeacher = businessLayer.GetTeacherByID(id);
-                                tempTeacher.Courses.Remove(course);
-                                businessLayer.UpdateTeacher(tempTeacher);
+                                if (course.TeacherId != null)
+                                {
+                                    teacher = businessLayer.GetTeacherByID((int)course.TeacherId);
+                                    teacher.Courses.Remove(course);
+                                    businessLayer.UpdateTeacher(teacher);
+                                }
+                                
                                 course.Teacher = null;
                                 course.Students.Clear();
                                 businessLayer.UpdateCourse(course);
